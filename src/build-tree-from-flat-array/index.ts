@@ -39,6 +39,7 @@ import { BuildTreeFn, TreeNode } from './types';
  * ]
  */
 export const buildTree: BuildTreeFn = (items) => {
+
   const copyObject = new Map<number, TreeNode>();
 
   items.forEach((item) => {
