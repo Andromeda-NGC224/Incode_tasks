@@ -1,4 +1,4 @@
-import { BuildTreeFn } from './types';
+import { BuildTreeFn, TreeNode } from './types';
 
 /**
  * @task Build Tree from Flat Array
