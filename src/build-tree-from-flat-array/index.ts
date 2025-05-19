@@ -39,5 +39,26 @@ import { BuildTreeFn } from './types';
  * ]
  */
 export const buildTree: BuildTreeFn = (items) => {
-  throw new Error('Not Implemented');
+  const map = items.reduce(
+    (acc, item) => {
+      acc[item.id] = { ...item, children: [] };
+      return acc;
+    },
+    {} as Record<number, any>,
+  );
+
+  const tree: any[] = [];
+
+  items.forEach((item) => {
+    if (
+      item.parentId !== null &&
+      item.parentId !== undefined &&
+      map[item.parentId]
+    ) {
+      map[item.parentId].children.push(map[item.id]);
+    } else {
+      tree.push(map[item.id]);
+    }
+  });
+  return tree;
 };
