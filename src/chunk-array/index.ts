@@ -25,6 +25,7 @@ import { ChunkArrayFn } from './types';
  * Output:
  * []
  */
+
 export const chunkArray: ChunkArrayFn = (arr, size) => {
   if (size <= 0) {
     return [];
