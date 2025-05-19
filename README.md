@@ -1,54 +1,70 @@
-# React + TypeScript + Vite
+# TypeScript Practice Tasks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project contains a collection of small but powerful TypeScript tasks intended for junior-to-middle frontend developers. Tasks are organized to improve understanding of:
+- Array manipulation
+- Object traversal
+- Nested data structures
+- String handling
+- Type safety and generic constraints
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📁 Folder Structure
 
-## Expanding the ESLint configuration
+Each task is located in its own folder inside `/src`.  
+Each folder contains:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- `index.ts` – function implementation
+- `types.ts` – function and test types
+- `mock.ts` – mock data for testing
+- `index.test.ts` – unit tests using **Vitest**
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+## ▶️ How to Run
+
+### Start a single task's playground
+```bash
+npm run start --folder=<folder-name>
+# Example:
+npm run start --folder=parse-query-string
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> This runs `index.ts` with `nodemon`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Run tests for a specific task
+```bash
+npm run test --folder=<folder-name>
+# Example:
+npm run test --folder=parse-query-string
 ```
+## Task Solving Guidelines
+
+### Implementation
+
+- The `index` file is your playground and the main place to implement the task.
+- You are allowed to create helper functions.
+- You can implement multiple solution variants.
+- Only the functions that are meant to pass the tests should be exported from the `index` file.
+- Do not export anything from the `index` file that is not a function directly related to the solution.
+- Avoid using the `any` type; prefer `unknown` and perform proper type checks.
+- You may use the provided type and mock files — they show what the inputs and expected outputs should be.
+
+### Commits
+
+- One task = one commit.
+
+### AI Tools Policy
+
+- Disable powerful AI assistants; only autocomplete is allowed.
+- When using ChatGPT:
+    - Do **not** ask it to write code for your task.
+    - Ask it to **explain concepts with references**, not code.
+    - If necessary, ask it to explain abstract code or pseudocode, not the code related to your specific task.
+
+### Team Communication
+
+- If you need help — ask for it in the team chat.
+- A teammate helping can explain concepts, show code, send links — anything is allowed.
+- However, remember: **doing the task for someone else without their understanding is harmful.**
+- Struggling is part of the learning process — don’t take that opportunity away from each other.
