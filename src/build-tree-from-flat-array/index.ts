@@ -38,6 +38,8 @@ import { BuildTreeFn } from './types';
  *   }
  * ]
  */
+
+
 export const buildTree: BuildTreeFn = (items) => {
   const map = items.reduce(
     (acc, item) => {
