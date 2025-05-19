@@ -26,5 +26,41 @@ import { ChunkArrayFn } from './types';
  * []
  */
 export const chunkArray: ChunkArrayFn = (arr, size) => {
-  throw new Error('Not Implemented');
+  if (size <= 0) return [];
+
+  const finishedChunks = [];
+  let currentChunk = [];
+
+  for (const item of arr) {
+    currentChunk.push(item);
+
+    if (currentChunk.length === size) {
+      finishedChunks.push(currentChunk);
+      currentChunk = [];
+    }
+  }
+
+  if (currentChunk.length > 0) {
+    finishedChunks.push(currentChunk);
+  }
+
+  console.log('finishedChunks', finishedChunks);
+
+  return finishedChunks;
 };
+chunkArray([1, 2, 3, 4, 5], 2);
+
+//
+
+export const chunkArray2: ChunkArrayFn = (arr, size) => {
+  if (size <= 0) return [];
+
+  const finishedChunks = [];
+  for (let i = 0; i < arr.length; i += size) {
+    finishedChunks.push(arr.slice(i, i + size));
+  }
+  console.log('chunks', finishedChunks);
+
+  return finishedChunks;
+};
+chunkArray2([1], 0);
