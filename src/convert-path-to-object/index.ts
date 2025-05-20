@@ -21,6 +21,19 @@ import { ConvertPathToObjectFn } from './types';
  * Output:
  * {}
  */
+
 export const convertPathToObject: ConvertPathToObjectFn = (path, value) => {
-  throw new Error('Not Implemented');
+  if (!path) {
+    return {};
+  }
+
+  const pathArray = path.split('.').reverse();
+  let result: Record<string, unknown> = value as Record<string, unknown>;
+
+  for (const key of pathArray) {
+    result = { [key]: result };
+  }
+
+  return result;
 };
+convertPathToObject('a.b.c', 42);
