@@ -16,21 +16,18 @@ import { CreateBreadcrumbsFn } from './types';
  *   { path: '/home/products/electronics', label: 'Electronics' }
  * ]
  */
+
 export const createBreadcrumbs: CreateBreadcrumbsFn = (paths) => {
   return paths.map((path) => {
     if (path === '/') {
-      return { path: '/', label: 'Home' };
+      return { path, label: 'Home' };
     }
 
-    const endpoint = path.split('/').filter(Boolean);
-    const lastEndpoint = endpoint[endpoint.length - 1];
+    const segments = path.replace(/^\/|\/$/g, '').split('/');
+    const lastPart = segments[segments.length - 1];
+    const label = lastPart.charAt(0).toUpperCase() + lastPart.slice(1);
 
-    const label = lastEndpoint.charAt(0).toUpperCase() + lastEndpoint.slice(1);
-
-    return {
-      path,
-      label,
-    };
+    return { path, label };
   });
 };
 createBreadcrumbs(['/home', '/home/products/', '/home/products/electronics']);
