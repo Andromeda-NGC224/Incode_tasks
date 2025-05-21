@@ -15,12 +15,13 @@ import { GetNestedPropertyFn } from './types';
  * Input: ({ a: null }, 'a.b')
  * Output: undefined
  */
-export const getNestedProperty: GetNestedPropertyFn = (obj, path) => {
-  const arrayOfPaths = path.split('.');
 
-  return arrayOfPaths.reduce((acc, key) => {
-    if (acc && acc[key]) {
-      return acc[key];
+export const getNestedProperty: GetNestedPropertyFn = (obj, path) => {
+  const keys = path.split('.');
+
+  return keys.reduce<unknown>((acc, key) => {
+    if (acc && typeof acc === 'object' && key in acc) {
+      return (acc as Record<string, unknown>)[key];
     }
     return undefined;
   }, obj);
