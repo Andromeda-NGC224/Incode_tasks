@@ -17,5 +17,24 @@ import { FormatPhoneNumberFn } from './types';
  * Output: ''
  */
 export const formatPhoneNumber: FormatPhoneNumberFn = (str) => {
-  throw new Error('Not Implemented');
+  const hasIncorrectValue = /[^\d\+\(\)\s]/.test(str);
+  //  only numbers, + , spaces and ()  are allowed
+  if (hasIncorrectValue) {
+    return '';
+  }
+
+  const numbers = str.replace(/\D/g, '');
+
+  if (numbers.length !== 12) {
+    return '';
+  }
+
+  const countryCode = numbers.slice(0, 2);
+  const code = numbers.slice(2, 5);
+  const firstPart = numbers.slice(5, 8);
+  const secondPart = numbers.slice(8, 10);
+  const thirdPart = numbers.slice(10);
+
+  return `+${countryCode} (${code}) ${firstPart}-${secondPart}-${thirdPart}`;
 };
+formatPhoneNumber('+38 093 123 45 67');
