@@ -17,12 +17,6 @@ import { FormatPhoneNumberFn } from './types';
  * Output: ''
  */
 export const formatPhoneNumber: FormatPhoneNumberFn = (str) => {
-  const hasIncorrectValue = /[^\d\+\(\)\s]/.test(str);
-  //  only numbers, + , spaces and ()  are allowed
-  if (hasIncorrectValue) {
-    return '';
-  }
-
   const numbers = str.replace(/\D/g, '');
 
   if (numbers.length !== 12) {
