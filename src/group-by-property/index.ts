@@ -1,4 +1,4 @@
-import { GroupByFn } from 'group-by/types';
+import { GroupByFn } from 'group-by-property/types';
 
 /**
  * @task Group By Property
@@ -26,6 +26,28 @@ import { GroupByFn } from 'group-by/types';
  *   ]
  * }
  */
-export const groupBy: GroupByFn = (array, key) => {
-  throw new Error('Not Implemented');
+export const groupByProperty: GroupByFn = (array, key) => {
+  return array.reduce<Record<string, (typeof array)[number][]>>(
+    (result, currentItem) => {
+      const groupName = String(currentItem[key]);
+
+      if (!result[groupName]) {
+        result[groupName] = [];
+      }
+
+      result[groupName].push(currentItem);
+
+      return result;
+    },
+    {},
+  );
 };
+
+groupByProperty(
+  [
+    { category: 'fruit', name: 'apple' },
+    { category: 'vegetable', name: 'carrot' },
+    { category: 'fruit', name: 'banana' },
+  ],
+  'category',
+);

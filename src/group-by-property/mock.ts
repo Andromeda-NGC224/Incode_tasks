@@ -1,4 +1,4 @@
-import { GroupByTestCase } from 'group-by/types';
+import { GroupByTestCase } from 'group-by-property/types';
 
 export const groupByCases: GroupByTestCase[] = [
   {
