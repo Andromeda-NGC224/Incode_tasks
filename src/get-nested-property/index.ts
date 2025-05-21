@@ -16,5 +16,13 @@ import { GetNestedPropertyFn } from './types';
  * Output: undefined
  */
 export const getNestedProperty: GetNestedPropertyFn = (obj, path) => {
-  throw new Error('Not Implemented');
+  const arrayOfPaths = path.split('.');
+
+  return arrayOfPaths.reduce((acc, key) => {
+    if (acc && acc[key]) {
+      return acc[key];
+    }
+    return undefined;
+  }, obj);
 };
+getNestedProperty({ a: { b: { c: 42 } } }, 'a.b.c');
