@@ -17,5 +17,20 @@ import { CreateBreadcrumbsFn } from './types';
  * ]
  */
 export const createBreadcrumbs: CreateBreadcrumbsFn = (paths) => {
-  throw new Error('Not Implemented');
+  return paths.map((path) => {
+    if (path === '/') {
+      return { path: '/', label: 'Home' };
+    }
+
+    const endpoint = path.split('/').filter(Boolean);
+    const lastEndpoint = endpoint[endpoint.length - 1];
+
+    const label = lastEndpoint.charAt(0).toUpperCase() + lastEndpoint.slice(1);
+
+    return {
+      path,
+      label,
+    };
+  });
 };
+createBreadcrumbs(['/home', '/home/products/', '/home/products/electronics']);
