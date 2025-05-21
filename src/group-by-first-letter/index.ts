@@ -24,5 +24,15 @@ import { GroupByFirstLetterFn } from 'group-by-first-letter/types';
  * }
  */
 export const groupByFirstLetter: GroupByFirstLetterFn = (words) => {
-  throw new Error('Not Implemented');
+  return words.reduce<Record<string, string[]>>((result, word) => {
+    const firstLetter = word.charAt(0).toLowerCase();
+
+    if (!result[firstLetter]) {
+      result[firstLetter] = [];
+    }
+    result[firstLetter].push(word);
+
+    return result;
+  }, {});
 };
+groupByFirstLetter(['apple', '', 'avocado', 'banana', 'car', 'cat', 'dog']);
