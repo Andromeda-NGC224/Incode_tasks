@@ -16,27 +16,29 @@ import { NestedObjectKeysFn } from './types';
  * Output: []
  */
 export const nestedObjectKeys: NestedObjectKeysFn = (obj) => {
-  if (Object.keys(obj).length === 0) {
-    return [];
-  }
-
   const result: string[] = [];
 
-  const pathCreator = (currentObject: any, path: string[] = []) => {
+  const isObject = (value: unknown): value is Record<string, unknown> =>
+    typeof value === 'object' && value !== null && !Array.isArray(value);
+
+  const pathCreator = (
+    currentObject: Record<string, unknown>,
+    path: string[] = [],
+  ) => {
     for (const key of Object.keys(currentObject)) {
       const fullPath = [...path, key].join('.');
       result.push(fullPath);
 
-      if (
-        typeof currentObject[key] === 'object' &&
-        currentObject[key] !== null
-      ) {
-        pathCreator(currentObject[key], [...path, key]);
+      const value = currentObject[key];
+      if (isObject(value)) {
+        pathCreator(value, [...path, key]);
       }
     }
   };
 
-  pathCreator(obj);
+  if (isObject(obj)) {
+    pathCreator(obj);
+  }
 
   return result;
 };
