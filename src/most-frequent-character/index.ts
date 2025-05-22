@@ -17,5 +17,19 @@ import { MostFrequentCharFn } from './types';
  * Output: ''
  */
 export const mostFrequentChar: MostFrequentCharFn = (text) => {
-  throw new Error('Not Implemented');
+  if (text.trim() === '') {
+    return '';
+  }
+
+  const count: Record<string, number> = {};
+  text.split('').forEach((letter) => {
+    count[letter] = (count[letter] || 0) + 1;
+  });
+
+  const mostOfLetters = text.split('').reduce((accLetter, letter) => {
+    return count[letter] > count[accLetter] ? letter : accLetter;
+  });
+
+  return mostOfLetters;
 };
+mostFrequentChar('aabbccddeeffggg');
