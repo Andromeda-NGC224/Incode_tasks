@@ -20,5 +20,39 @@ import { CalculateAverageRatingsFn } from 'movie-average-rating/types';
  * ]
  */
 export const calculateAverageRatings: CalculateAverageRatingsFn = (ratings) => {
-  throw new Error('Not Implemented');
+  if (!ratings.length) {
+    return [];
+  }
+
+  const movieStats = new Map<
+    number,
+    { amountRating: number; quantity: number }
+  >();
+
+  ratings.forEach(({ movieId, score }) => {
+    const current = movieStats.get(movieId);
+
+    if (!current) {
+      movieStats.set(movieId, { amountRating: score, quantity: 1 });
+      return;
+    }
+
+    current.amountRating += score;
+    current.quantity += 1;
+  });
+
+  const result = Array.from(movieStats.entries()).map(
+    ([movieId, { amountRating, quantity }]) => ({
+      movieId,
+      averageScore: Math.round((amountRating / quantity) * 10) / 10,
+    }),
+  );
+
+  return result;
 };
+calculateAverageRatings([
+  { userId: 1, movieId: 5, score: 10 },
+  { userId: 2, movieId: 5, score: 9 },
+  { userId: 3, movieId: 5, score: 10 },
+  { userId: 1, movieId: 6, score: 6 },
+]);
