@@ -19,5 +19,18 @@ import { FilterValidUsersFn } from './types';
  * ]
  */
 export const filterValidUsers: FilterValidUsersFn = (users) => {
-  throw new Error('Not Implemented');
+  return users.filter((user) => {
+    return (
+      typeof user.name === 'string' &&
+      typeof user.age === 'number' &&
+      user.age > 18
+    );
+  });
 };
+
+filterValidUsers([
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 17 },
+  { name: 123, age: 32 },
+  { name: 'Carol', age: 18 },
+]);
