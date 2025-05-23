@@ -28,5 +28,53 @@ import { SummarizeTransactionsFn } from 'summarize-transactions/types';
 export const summarizeTransactions: SummarizeTransactionsFn = (
   transactions,
 ) => {
-  throw new Error('Not Implemented');
+  if (transactions.length === 0) {
+    return [];
+  }
+
+  const allUserTransactions = transactions.reduce(
+    (accumulator, transaction) => {
+      const { userId, amount, type } = transaction;
+
+      if (!accumulator[userId]) {
+        accumulator[userId] = {
+          totalIncome: 0,
+          totalExpense: 0,
+        };
+      }
+
+      if (type === 'income') {
+        accumulator[userId].totalIncome += amount;
+      }
+      if (type === 'expense') {
+        accumulator[userId].totalExpense += amount;
+      }
+
+      return accumulator;
+    },
+    {} as Record<number, { totalIncome: number; totalExpense: number }>,
+  );
+
+  const result = Object.entries(allUserTransactions).map(
+    ([userId, summary]) => {
+      const userIdNumber = Number(userId);
+      const { totalIncome, totalExpense } = summary;
+      const net = totalIncome - totalExpense;
+
+      return {
+        userId: userIdNumber,
+        totalIncome,
+        totalExpense,
+        net,
+      };
+    },
+  );
+
+  return result;
 };
+summarizeTransactions([
+  { userId: 1, amount: 100, type: 'income' },
+  { userId: 1, amount: 50, type: 'expense' },
+  { userId: 2, amount: 200, type: 'income' },
+  { userId: 1, amount: 25, type: 'expense' },
+]);
