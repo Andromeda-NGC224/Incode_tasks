@@ -15,11 +15,12 @@ import { NestedObjectKeysFn } from './types';
  * Input: {}
  * Output: []
  */
+
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
 export const nestedObjectKeys: NestedObjectKeysFn = (obj) => {
   const result: string[] = [];
-
-  const isObject = (value: unknown): value is Record<string, unknown> =>
-    typeof value === 'object' && value !== null && !Array.isArray(value);
 
   const pathCreator = (
     currentObject: Record<string, unknown>,
