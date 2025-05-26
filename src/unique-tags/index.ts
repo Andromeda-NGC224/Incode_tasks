@@ -34,5 +34,30 @@ import { ExtractUniqueTagsFn } from 'unique-tags/types';
  * ['a', 'b', 'c', 'd']
  */
 export const extractUniqueTags: ExtractUniqueTagsFn = (items) => {
-  throw new Error('Not Implemented');
+  if (items.length === 0) return {};
+
+  const uniqueTags = items.reduce(
+    (accumulator, item) => {
+      const { tags } = item;
+
+      if (tags.length === 0) {
+        return accumulator;
+      }
+
+      const validTags = tags.filter((tag) => tag.trim() !== '');
+
+      validTags.forEach((tag) => {
+        accumulator[tag] = (accumulator[tag] || 0) + 1;
+      });
+
+      return accumulator;
+    },
+    {} as Record<string, number>,
+  );
+
+  return uniqueTags;
 };
+extractUniqueTags([
+  { id: 1, tags: ['x', 'y', 'x', 'z'] },
+  { id: 2, tags: ['y', 'z', 'w'] },
+]);
