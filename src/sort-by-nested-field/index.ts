@@ -15,6 +15,34 @@ import { SortByNestedFieldFn } from './types';
  *   { id: 1, user: { name: 'B' } }
  * ]
  */
+
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
 export const sortByNestedField: SortByNestedFieldFn = (arr, field) => {
-  throw new Error('Not Implemented');
+  const path = field.split('.');
+
+  const getValue = (obj: unknown): unknown => {
+    return path.reduce<unknown>((value, key) => {
+      if (Array.isArray(value) && !isNaN(+key)) {
+        return value[+key];
+      }
+      if (isObject(value)) {
+        return value[key];
+      }
+      return undefined;
+    }, obj);
+  };
+
+  return [...arr].sort((a, b) => {
+    const valueA = getValue(a);
+    const valueB = getValue(b);
+
+    if (valueA == null && valueB != null) return -1;
+    if (valueB == null && valueA != null) return 1;
+    if (valueA == null && valueB == null) return 0;
+
+    return valueA! < valueB! ? -1 : valueA! > valueB! ? 1 : 0;
+  });
 };
+sortByNestedField([{ id: 1, info: { score: 10 } }, { id: 2 }], 'info.score');
