@@ -20,5 +20,13 @@ export const mergeObjectArrays = <T extends Mergeable>(
   arr1: T[],
   arr2: T[],
 ): T[] => {
-  throw new Error('Not Implemented');
+  const finalArray = new Map<number, T>(
+    arr1.map((item) => [item.id, { ...item }]),
+  );
+  arr2.forEach((item) => {
+    finalArray.set(item.id, { ...finalArray.get(item.id), ...item });
+  });
+  return Array.from(finalArray.values());
 };
+
+mergeObjectArrays([{ id: 1, name: 'X' }], [{ id: 1, name: 'Y', age: 20 }]);
