@@ -14,5 +14,18 @@ import { ValidateObjectShapeFn } from './types';
  * Output: false (missing key)
  */
 export const validateObjectShape: ValidateObjectShapeFn = (obj, schema) => {
-  throw new Error('Not Implemented');
+  return Object.keys(schema).every((key) => {
+    if (!(key in obj)) {
+      return false;
+    }
+
+    const schemaType = schema[key];
+    const objectType = typeof obj[key];
+
+    return objectType === schemaType;
+  });
 };
+validateObjectShape(
+  { id: 1, active: true },
+  { id: 'number', active: 'boolean' },
+);
